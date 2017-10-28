@@ -2,6 +2,8 @@ export class Board {
   constructor(numberOfRows, numberOfColumns, numberOfBombs){
     if (numberOfRows > 1 && numberOfColumns > 1 && numberOfRows * numberOfColumns > numberOfBombs) {
       this._numberOfBombs = numberOfBombs;
+      this._numberOfRows = numberOfRows;
+      this._numberOfColumns = numberOfColumns;
       this._numberOfTiles = numberOfRows * numberOfColumns;
       this._playerBoard = Board.generatePlayerBoard(numberOfRows, numberOfColumns);
       this._bombBoard = Board.generateBombBoard(numberOfRows, numberOfColumns, numberOfBombs);
@@ -83,10 +85,23 @@ export class Board {
     console.log(this._playerBoard.map(row => row.join('|')).join('\n'));
   };
 
-  //print Bomb board for debugging and testing
-  printBombBoard(){
-    console.log(this._bombBoard.map(row => row.join('|')).join('\n'));
-  };
+  finalPrint(){
+    for (let rowIndex = 0; rowIndex < this._numberOfRows; rowIndex++){
+      for (let columnIndex = 0; columnIndex < this._numberOfColumns; columnIndex++){
+        if (this._bombBoard[rowIndex][columnIndex] !== 'B') {
+          this._playerBoard[rowIndex][columnIndex] = this.getNumberOfNeighborBombs(rowIndex, columnIndex);
+        } else {
+          this._playerBoard[rowIndex][columnIndex] = 'B';
+        };
+      };
+    };
+    this.print();
+  }
+
+  // function to print Bomb board for debugging and testing
+  // printBombBoard(){
+  //   console.log(this._bombBoard.map(row => row.join('|')).join('\n'));
+  // };
 
   static generatePlayerBoard(numberOfRows, numberOfColumns){
     let board = [];

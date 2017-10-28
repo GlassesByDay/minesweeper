@@ -7,10 +7,10 @@ class Game {
   };
 
   // function for testing game behavior
-  testPrint(){
-    console.log("Bomb placement:");
-    this._board.printBombBoard();
-  };
+  // testPrint(){
+  //   console.log("Bomb placement:");
+  //   this._board.printBombBoard();
+  // };
 
   playMove(rowIndex, columnIndex){
     this._board.flipTile(rowIndex, columnIndex);
@@ -18,16 +18,18 @@ class Game {
       let endDateStamp = new Date();
       let msElapsed = endDateStamp - this._startTimeStamp;
       let secondsElapsed = msElapsed / 1000;
-      console.log("The game is over!");
+      console.log("The game is over - you lost!");
       console.log(`Your game lasted ${secondsElapsed} seconds.`);
       console.log("Final Board:");
-      this._board.print();
+      this._board.finalPrint();
     } else if (!this._board.hasSafeTiles()) {
       let endDateStamp = new Date();
       let msElapsed = endDateStamp - this._startTimeStamp;
       let secondsElapsed = msElapsed / 1000;
       console.log("You won - congratulations!");
       console.log(`Your game lasted ${secondsElapsed} seconds.`);
+      console.log("Final Board:");
+      this._board.finalPrint();
     } else {
       console.log("Current Board:");
       this._board.print();
